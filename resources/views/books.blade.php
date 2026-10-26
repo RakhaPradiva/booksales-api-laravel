@@ -17,6 +17,8 @@
             <li>{{ $item['description'] }}</li>
             <li>{{ $item['price'] }}</li>
             <li>{{ $item['stock'] }}</li>
+            <li>{{ $item['genre_id'] }}</li>
+            <li>{{ $item['author_id'] }}</li>
         </ul>
     @endforeach
 </body>
