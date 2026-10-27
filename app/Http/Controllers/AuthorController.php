@@ -11,6 +11,13 @@ class AuthorController extends Controller
     {
 
         $authors = Author::all();
-        return view('authors', ['authors' => $authors]);
+        return response()->json(
+            [
+                "success" => true,
+                "message" => "Get All Author Data",
+                "data" => $authors
+            ],
+            200
+        );
     }
 }
