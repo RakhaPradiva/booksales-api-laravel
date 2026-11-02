@@ -82,64 +82,6 @@ class TransactionController extends Controller
         ], 201);
     }
 
-
-    public function update(Request $request, string $id)
-    {
-        $transaction = Transaction::find($id);
-
-        if (! $transaction) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Transaction not found!',
-            ], 404);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'quantity' => 'required|integer|min:1',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $validator->errors(),
-            ], 422);
-        }
-
-        $book = Book::find($transaction->book_id);
-
-        if (! $book) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Book not found!',
-            ], 404);
-        }
-
-        $book->stock += $transaction->quantity;
-
-        if ($book->stock < $request->quantity) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Not enough stock!',
-            ], 400);
-        }
-
-        $book->stock -= $request->quantity;
-        $book->save();
-
-        $data = [
-            'quantity' => $request->quantity,
-            'total_amount' => $book->price * $request->quantity,
-        ];
-
-        $transaction->update($data);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Transaction updated successfully!',
-            'data' => $transaction,
-        ], 200);
-    }
-
     public function show(string $id)
     {
 
