@@ -11,13 +11,13 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('genre', 'author')->get();
 
         if ($books->isEmpty()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Book data not found!',
-                'data' => $books
+                'data' => $books,
             ], 200);
         }
 
@@ -69,19 +69,19 @@ class BookController extends Controller
 
     public function show(string $id)
     {
-        $book = Book::find($id);
+        $book = Book::with('genre', 'author')->find($id);
 
-        if (!$book) {
+        if (! $book) {
             return response()->json([
                 'success' => false,
-                'message' => 'Book not found!'
+                'message' => 'Book not found!',
             ], 404);
         }
 
         return response()->json([
             'success' => true,
             'message' => 'Get detail book',
-            'data' => $book
+            'data' => $book,
         ], 200);
     }
 
@@ -89,10 +89,10 @@ class BookController extends Controller
     {
         $book = Book::find($id);
 
-        if (!$book) {
+        if (! $book) {
             return response()->json([
                 'success' => false,
-                'message' => 'Book not found!'
+                'message' => 'Book not found!',
             ], 404);
         }
 
@@ -127,7 +127,7 @@ class BookController extends Controller
             $image->store('books', 'public');
 
             if ($book->cover_photo) {
-                Storage::disk('public')->delete('books/' . $book->cover_photo);
+                Storage::disk('public')->delete('books/'.$book->cover_photo);
             }
 
             $data['cover_photo'] = $image->hashName();
@@ -146,22 +146,22 @@ class BookController extends Controller
     {
         $book = Book::find($id);
 
-        if (!$book) {
+        if (! $book) {
             return response()->json([
                 'success' => false,
-                'message' => 'Book not found!'
+                'message' => 'Book not found!',
             ], 404);
         }
 
         if ($book->cover_photo) {
-            Storage::disk('public')->delete('books/' . $book->cover_photo);
+            Storage::disk('public')->delete('books/'.$book->cover_photo);
         }
 
         $book->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'Book deleted successfully!'
+            'message' => 'Book deleted successfully!',
         ], 200);
     }
 }

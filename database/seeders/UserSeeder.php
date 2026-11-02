@@ -16,13 +16,31 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@booksales.com',
             'password' => bcrypt('admin'),
-            'role' => 'admin'
+            'role' => 'admin',
         ]);
         User::create([
             'name' => 'customer 1',
             'email' => 'customer@booksales.com',
             'password' => bcrypt('customer'),
-            'role' => 'customer'
+            'role' => 'customer',
+        ]);
+        User::create([
+            'name' => 'customer 2',
+            'email' => 'customer2@booksales.com',
+            'password' => bcrypt('customer'),
+            'role' => 'customer',
+        ]);
+        User::create([
+            'name' => 'customer 3',
+            'email' => 'customer3@booksales.com',
+            'password' => bcrypt('customer'),
+            'role' => 'customer',
+        ]);
+        User::create([
+            'name' => 'customer 4',
+            'email' => 'customer4@booksales.com',
+            'password' => bcrypt('customer'),
+            'role' => 'customer',
         ]);
     }
 }
