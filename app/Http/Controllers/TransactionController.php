@@ -71,7 +71,6 @@ class TransactionController extends Controller
             'order_number' => $uniqueCode,
             'customer_id' => $user->id,
             'book_id' => $request->book_id,
-            'quantity' => $request->quantity,
             'total_amount' => $totalAmount,
         ]);
 
